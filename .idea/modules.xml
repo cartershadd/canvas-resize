@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/canvas-rezise.iml" filepath="$PROJECT_DIR$/.idea/canvas-rezise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../canvas-resize/.idea/canvas-resize.iml" filepath="$PROJECT_DIR$/../canvas-resize/.idea/canvas-resize.iml" />
     </modules>
   </component>
 </project>
