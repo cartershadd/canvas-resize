@@ -5,6 +5,20 @@ canvas.height = window.innerHeight;
 
 var c = canvas.getContext('2d');
 
+var mouse = {
+    x: undefined,
+    y: undefined
+}
+
+var maxRadius = 40;
+var minRadius = 2;
+
+window.addEventListener('mousemove',
+    function(event){
+    mouse.x = event.x;
+    mouse.y = event.y;
+})
+
 function Circle(x, y, dx, dy, radius) {
     this.x = x;
     this.y = y;
@@ -15,8 +29,8 @@ function Circle(x, y, dx, dy, radius) {
     this.draw = function () {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.strokeStyle = getRandomColor();
-        c.stroke();
+        c.fillStyle = getRandomColor();
+        c.fill();
     }
 
     this.update = function () {
@@ -29,6 +43,16 @@ function Circle(x, y, dx, dy, radius) {
 
         this.x += this.dx;
         this.y += this.dy;
+
+        // Interactivity
+        if (mouse.x - this.x < 50 && mouse.x - this.x > -50 &&
+            mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+            if (this.radius < maxRadius) {
+                this.radius += 1;
+            }
+        } else if (this.radius > minRadius) {
+            this.radius -= 1;
+        }
 
         this.draw();
     }
