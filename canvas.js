@@ -6,11 +6,11 @@ canvas.height = window.innerHeight;
 var c = canvas.getContext('2d');
 
 var mouse = {
-    x: undefined,
-    y: undefined
+    x: 0,
+    y: 0
 }
 
-var maxRadius = 40;
+var maxRadius = 80;
 // var minRadius = 2;
 
 window.addEventListener('mousemove',
@@ -18,6 +18,12 @@ window.addEventListener('mousemove',
     mouse.x = event.x;
     mouse.y = event.y;
 })
+
+window.addEventListener('resize', function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+});
 
 function Circle(x, y, dx, dy, radius) {
     this.x = x;
@@ -45,13 +51,6 @@ function Circle(x, y, dx, dy, radius) {
         this.x += this.dx;
         this.y += this.dy;
 
-        window.addEventListener('resize', function(){
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // init();
-        });
-
         // Interactivity
         if (mouse.x - this.x < 50 && mouse.x - this.x > -50 &&
             mouse.y - this.y < 50 && mouse.y - this.y > -50) {
@@ -72,7 +71,7 @@ function init() {
 
     circleArray = [];
 
-    for (var i = 0; i < 800; i++) {
+    for (var i = 0; i < 8000; i++) {
         var radius = Math.random() * 3 + 1;
         var x = Math.random() * (innerWidth - radius * 2) + radius;
         var y = Math.random() * (innerHeight - radius * 2) + radius;
@@ -97,10 +96,7 @@ requestAnimationFrame(animate); // call through animation framework instead of d
 
 
 function getRandomColor() {
-    let r = 255 * Math.random() | 0,
-        g = 255 * Math.random() | 0,
-        b = 255 * Math.random() | 0;
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
+    return "#" + ((1 << 24) * Math.random() | 0).toString(16);
 }
 
 // Squares
