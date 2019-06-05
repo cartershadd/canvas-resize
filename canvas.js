@@ -11,7 +11,7 @@ var mouse = {
 }
 
 var maxRadius = 40;
-var minRadius = 2;
+// var minRadius = 2;
 
 window.addEventListener('mousemove',
     function(event){
@@ -25,6 +25,7 @@ function Circle(x, y, dx, dy, radius) {
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
+    this.minRadius = radius;
 
     this.draw = function () {
         c.beginPath();
@@ -44,13 +45,20 @@ function Circle(x, y, dx, dy, radius) {
         this.x += this.dx;
         this.y += this.dy;
 
+        window.addEventListener('resize', function(){
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // init();
+        });
+
         // Interactivity
         if (mouse.x - this.x < 50 && mouse.x - this.x > -50 &&
             mouse.y - this.y < 50 && mouse.y - this.y > -50) {
             if (this.radius < maxRadius) {
                 this.radius += 1;
             }
-        } else if (this.radius > minRadius) {
+        } else if (this.radius > this.minRadius) {
             this.radius -= 1;
         }
 
@@ -60,15 +68,19 @@ function Circle(x, y, dx, dy, radius) {
 
 var circleArray = [];
 
-for (var i = 0; i < 100; i++) {
-    var radius = 30;
-    var x = Math.random() * (innerWidth - radius * 2) + radius;
-    var y = Math.random() * (innerHeight - radius * 2) + radius;
-    var dx = (Math.random() - 0.5);
-    var dy = (Math.random() - 0.5);
-    circleArray.push(new Circle(x, y, dx, dy, radius));
-}
+function init() {
 
+    circleArray = [];
+
+    for (var i = 0; i < 800; i++) {
+        var radius = Math.random() * 3 + 1;
+        var x = Math.random() * (innerWidth - radius * 2) + radius;
+        var y = Math.random() * (innerHeight - radius * 2) + radius;
+        var dx = (Math.random() - 0.5);
+        var dy = (Math.random() - 0.5);
+        circleArray.push(new Circle(x, y, dx, dy, radius));
+    }
+}
 
 function animate() {
     c.clearRect(0, 0, innerWidth, innerHeight);
@@ -78,6 +90,8 @@ function animate() {
     }
     requestAnimationFrame(animate); // put at end
 }
+
+init();
 
 requestAnimationFrame(animate); // call through animation framework instead of directly
 
